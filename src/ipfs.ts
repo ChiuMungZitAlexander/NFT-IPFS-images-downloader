@@ -3,24 +3,12 @@ import { consola } from "consola";
 import fs from "node:fs";
 import path from "node:path";
 
-const dirPath = path.join(__dirname, "output");
+import { EXTENSION_MAP } from "./const";
+import { sleep, rootDir } from "./utils";
 
-// const IPFS_BASE_URL = "https://w3s.link/ipfs";
-// const IPFS_BASE_URL = "https://4everland.io/ipfs";
+const outputPath = path.join(rootDir, "output");
+
 const IPFS_BASE_URL = "https://ipfs.io/ipfs";
-
-const EXTENSION_MAP: Record<string, string> = {
-  "image/png": "png",
-  "image/jpeg": "jpg",
-  "image/jpg": "jpg",
-};
-
-const sleep = (ms = 500) =>
-  new Promise((res) =>
-    setTimeout(() => {
-      res(null);
-    }, ms)
-  );
 
 const program = new Command();
 
@@ -33,8 +21,8 @@ program
   .action(
     async ({ hash, totalSupply }: { hash: string; totalSupply: number }) => {
       // create dir if it doesn't exist
-      if (!fs.existsSync(dirPath)) {
-        fs.mkdirSync(dirPath, { recursive: true });
+      if (!fs.existsSync(outputPath)) {
+        fs.mkdirSync(outputPath, { recursive: true });
       }
 
       // define supported extensions
@@ -55,7 +43,7 @@ program.parse();
 
 async function fetchAndSave(hash: string, offset: number) {
   // skip fetching if file with token id already exists
-  const files = fs.readdirSync(dirPath);
+  const files = fs.readdirSync(outputPath);
   if (files.some((file) => path.parse(file).name === String(offset))) {
     consola.log(`Image of token #${offset} exists, skipped`);
     return;
@@ -86,7 +74,7 @@ async function fetchAndSave(hash: string, offset: number) {
     // save fetched NFT image to local file
     const buffer = await imageResponse.arrayBuffer();
     fs.writeFileSync(
-      path.join(dirPath, `${offset}.${extension}`),
+      path.join(outputPath, `${offset}.${extension}`),
       Buffer.from(buffer)
     );
     consola.success(`Saved images token #${offset} as ${offset}.${extension}`);

@@ -2,9 +2,9 @@
   "name": "nft-ipfs-images-downloader",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
   "scripts": {
-    "start": "tsx ./index.ts",
+    "start:ipfs": "tsx ./src/ipfs.ts",
+    "start:deepnftvalue": "tsx ./src/deepnftvalue.ts",
     "tsc": "tsc"
   },
   "keywords": [],
