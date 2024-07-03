@@ -1,0 +1,22 @@
+{
+  "name": "nft-ipfs-images-downloader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "start": "tsx ./index.ts",
+    "tsc": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "consola": "^3.2.3"
+  }
+}
