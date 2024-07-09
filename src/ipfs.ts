@@ -25,8 +25,6 @@ program
         fs.mkdirSync(outputPath, { recursive: true });
       }
 
-      // define supported extensions
-
       let offset = 0;
 
       consola.start("Start fetching NFTs meta from IPFS");

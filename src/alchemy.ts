@@ -8,20 +8,28 @@ import { sleep, rootDir } from "./utils";
 
 const outputPath = path.join(rootDir, "output");
 
-const TOKEN = `Token 6d3b85e2e7d3679c55dedc0f2b21ef2a72018061`;
-
-const BASE_URL = "https://api.deepnftvalue.com/v1/tokens";
+const ALCHEMY_BASE_URL =
+  "https://eth-mainnet.g.alchemy.com/nft/v3/hCi-biLcLaRtpcb6shcMIlTjCfkvwn5L/getNFTMetadata";
 
 const program = new Command();
 
 program
-  .requiredOption("-s --slug <string>", "collection deep nft slug")
   .requiredOption(
-    "-t --total-supply <number>",
+    "-c --contract-address <string>",
+    "collection contract address"
+  )
+  .requiredOption(
+    "-s --total-supply <number>",
     "the total supply of the collection"
   )
   .action(
-    async ({ slug, totalSupply }: { slug: string; totalSupply: number }) => {
+    async ({
+      contractAddress,
+      totalSupply,
+    }: {
+      contractAddress: string;
+      totalSupply: number;
+    }) => {
       // create dir if it doesn't exist
       if (!fs.existsSync(outputPath)) {
         fs.mkdirSync(outputPath, { recursive: true });
@@ -29,10 +37,10 @@ program
 
       let offset = 0;
 
-      consola.start("Start fetching NFTs meta from deepnftvalue");
+      consola.start("Start fetching NFTs meta from Alchemy");
 
       do {
-        await fetchAndSave(slug, offset);
+        await fetchAndSave(contractAddress, offset);
 
         offset += 1;
       } while (offset < totalSupply);
@@ -41,7 +49,7 @@ program
 
 program.parse();
 
-async function fetchAndSave(slug: string, offset: number) {
+async function fetchAndSave(contractAddress: string, offset: number) {
   // skip fetching if file with token id already exists
   const files = fs.readdirSync(outputPath);
   if (files.some((file) => path.parse(file).name === String(offset))) {
@@ -51,20 +59,17 @@ async function fetchAndSave(slug: string, offset: number) {
 
   try {
     // fetch NFT meta data
-    const response = await fetch(`${BASE_URL}/${slug}/${offset}`, {
-      headers: new Headers({
-        Authorization: TOKEN,
-      }),
-    });
+    const response = await fetch(
+      `${ALCHEMY_BASE_URL}?contractAddress=${contractAddress}&tokenId=${offset}`
+    );
     const json = await response.json();
 
-    if (typeof json?.image?.src !== "string") {
-      consola.log(`Image src is not returned from deepnftvalue API, skipped`);
-      return;
+    if (!json?.image?.cachedUrl) {
+      consola.warn(`Image cachedUrl of token #${offset} is not available`);
     }
 
     // fetch NFT image
-    const imageResponse = await fetch(json.image.src);
+    const imageResponse = await fetch(json.image.cachedUrl);
     if (!imageResponse.ok) {
       throw new Error(`Failed to fetch image: ${imageResponse.statusText}`);
     }

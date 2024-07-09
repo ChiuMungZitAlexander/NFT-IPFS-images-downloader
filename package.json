@@ -5,6 +5,7 @@
   "scripts": {
     "start:ipfs": "tsx ./src/ipfs.ts",
     "start:deepnftvalue": "tsx ./src/deepnftvalue.ts",
+    "start:alchemy": "tsx ./src/alchemy.ts",
     "tsc": "tsc"
   },
   "keywords": [],
