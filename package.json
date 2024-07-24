@@ -6,6 +6,7 @@
     "start:ipfs": "tsx ./src/ipfs.ts",
     "start:deepnftvalue": "tsx ./src/deepnftvalue.ts",
     "start:alchemy": "tsx ./src/alchemy.ts",
+    "start:opensea": "tsx ./src/opensea.ts",
     "tsc": "tsc"
   },
   "keywords": [],
