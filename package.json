@@ -2,6 +2,10 @@
   "name": "nft-ipfs-images-downloader",
   "version": "1.0.0",
   "description": "",
+  "packageManager": "pnpm@9.6.0",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "start:ipfs": "tsx ./src/ipfs.ts",
     "start:deepnftvalue": "tsx ./src/deepnftvalue.ts",
@@ -13,12 +17,13 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^20.14.9",
-    "tsx": "^4.16.0",
-    "typescript": "^5.5.3"
+    "@types/node": "^20.14.12",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.4"
   },
   "dependencies": {
     "commander": "^12.1.0",
-    "consola": "^3.2.3"
+    "consola": "^3.2.3",
+    "dotenv": "^16.4.5"
   }
 }
