@@ -7,10 +7,10 @@
     "node": ">=20"
   },
   "scripts": {
-    "start:ipfs": "tsx ./src/ipfs.ts",
-    "start:deepnftvalue": "tsx ./src/deepnftvalue.ts",
-    "start:alchemy": "tsx ./src/alchemy.ts",
-    "start:opensea": "tsx ./src/opensea.ts",
+    "start:ipfs": "tsx -r dotenv/config ./src/ipfs.ts",
+    "start:deepnftvalue": "tsx -r dotenv/config ./src/deepnftvalue.ts",
+    "start:alchemy": "tsx -r dotenv/config ./src/alchemy.ts",
+    "start:opensea": "tsx -r dotenv/config ./src/opensea.ts",
     "tsc": "tsc"
   },
   "keywords": [],

@@ -8,8 +8,6 @@ import { sleep, rootDir } from "./utils";
 
 const outputPath = path.join(rootDir, "output");
 
-const TOKEN = `Token 6d3b85e2e7d3679c55dedc0f2b21ef2a72018061`;
-
 const BASE_URL = "https://api.deepnftvalue.com/v1/tokens";
 
 const program = new Command();
@@ -53,7 +51,7 @@ async function fetchAndSave(slug: string, offset: number) {
     // fetch NFT meta data
     const response = await fetch(`${BASE_URL}/${slug}/${offset}`, {
       headers: new Headers({
-        Authorization: TOKEN,
+        Authorization: process.env.DEEPNFTVALUE_TOKEN!,
       }),
     });
     const json = await response.json();

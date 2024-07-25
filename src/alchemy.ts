@@ -8,8 +8,8 @@ import { sleep, rootDir } from "./utils";
 
 const outputPath = path.join(rootDir, "output");
 
-const ALCHEMY_BASE_URL =
-  "https://eth-mainnet.g.alchemy.com/nft/v3/hCi-biLcLaRtpcb6shcMIlTjCfkvwn5L/getNFTMetadata";
+const ALCHEMY_BASE_URL = `https://eth-mainnet.g.alchemy.com/nft/v3/${process.env
+  .ALCHEMY_KEY!}/getNFTMetadata`;
 
 const program = new Command();
 

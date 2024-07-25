@@ -64,7 +64,7 @@ async function fetchAndSave(contractAddress: string, offset: number) {
       {
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": "8df878c298854b3fa82f5a2c711a189c",
+          "x-api-key": process.env.OPENSEA_KEY!,
         },
       }
     );
